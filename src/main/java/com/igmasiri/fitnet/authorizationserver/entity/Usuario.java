@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-public class User extends BaseIdEntity implements UserDetails {
+public class Usuario extends GenericEntity implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
 	private String email;
@@ -29,10 +29,10 @@ public class User extends BaseIdEntity implements UserDetails {
 	private boolean credentialsNonExpired;
 
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "role_user", joinColumns = {
-			@JoinColumn(name = "user_id", referencedColumnName = "id") }, inverseJoinColumns = {
-					@JoinColumn(name = "role_id", referencedColumnName = "id") })
-	private List<Role> roles;
+	@JoinTable(name = "rol_usuario", joinColumns = {
+			@JoinColumn(name = "usuario_id", referencedColumnName = "id") }, inverseJoinColumns = {
+					@JoinColumn(name = "rol_id", referencedColumnName = "id") })
+	private List<Rol> rols;
 
 	@Override
 	public boolean isEnabled() {
@@ -54,13 +54,13 @@ public class User extends BaseIdEntity implements UserDetails {
 		return !accountNonLocked;
 	}
 
-	/* Get roles and permissions and add them as a Set of GrantedAuthority */
+	/* Get rols and permissions and add them as a Set of GrantedAuthority */
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
-		roles.forEach(r -> {
+		rols.forEach(r -> {
 			authorities.add(new SimpleGrantedAuthority(r.getName()));
-			r.getPermissions().forEach(p -> {
+			r.getPermisos().forEach(p -> {
 				authorities.add(new SimpleGrantedAuthority(p.getName()));
 			});
 		});

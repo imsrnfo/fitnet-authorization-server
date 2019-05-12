@@ -95,15 +95,12 @@ public class OAuth2Configuration extends AuthorizationServerConfigurerAdapter {
 		if (checkUserScopes) endpoints.requestFactory(requestFactory());
 	}
 
-	/** Imprime los errores de loggeo */
 	@Bean
 	public WebResponseExceptionTranslator loggingExceptionTranslator() {
 		return new DefaultWebResponseExceptionTranslator() {
 			@Override
 			public ResponseEntity<OAuth2Exception> translate(Exception e) throws Exception {
-				// This is the line that prints the stack trace to the log. You can customise this to format the trace etc if you like
 				e.printStackTrace();
-				// Carry on handling the exception
 				ResponseEntity<OAuth2Exception> responseEntity = super.translate(e);
 				HttpHeaders headers = new HttpHeaders();
 				headers.setAll(responseEntity.getHeaders().toSingleValueMap());

@@ -1,6 +1,6 @@
 package com.igmasiri.fitnet.authorizationserver.config;
 
-import com.igmasiri.fitnet.authorizationserver.entity.User;
+import com.igmasiri.fitnet.authorizationserver.entity.Usuario;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
@@ -13,9 +13,9 @@ public class CustomTokenEnhancer extends JwtAccessTokenConverter {
 
 	@Override
 	public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
-		User user = (User) authentication.getPrincipal();
+		Usuario usuario = (Usuario) authentication.getPrincipal();
 		Map<String, Object> info = new LinkedHashMap<String, Object>(accessToken.getAdditionalInformation());
-		info.put("email", user.getEmail());
+		info.put("email", usuario.getEmail());
 		DefaultOAuth2AccessToken customAccessToken = new DefaultOAuth2AccessToken(accessToken);
 		customAccessToken.setAdditionalInformation(info);
 		return super.enhance(customAccessToken, authentication);

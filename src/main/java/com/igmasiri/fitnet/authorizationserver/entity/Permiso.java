@@ -3,7 +3,7 @@ package com.igmasiri.fitnet.authorizationserver.entity;
 import javax.persistence.Entity;
 
 @Entity
-public class Permission extends BaseIdEntity {
+public class Permiso extends GenericEntity {
 
 	private String name;
 
