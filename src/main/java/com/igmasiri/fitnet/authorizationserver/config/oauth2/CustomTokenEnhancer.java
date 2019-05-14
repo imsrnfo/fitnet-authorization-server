@@ -1,11 +1,10 @@
-package com.igmasiri.fitnet.authorizationserver.config;
+package com.igmasiri.fitnet.authorizationserver.config.oauth2;
 
-import com.igmasiri.fitnet.authorizationserver.entity.Usuario;
+import com.igmasiri.fitnet.authorizationserver.models.Usuario;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
 

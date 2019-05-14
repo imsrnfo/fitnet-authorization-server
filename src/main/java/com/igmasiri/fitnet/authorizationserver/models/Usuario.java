@@ -1,21 +1,29 @@
-package com.igmasiri.fitnet.authorizationserver.entity;
+package com.igmasiri.fitnet.authorizationserver.models;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @Entity
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Usuario extends GenericEntity implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
+	@NotBlank
+	@Pattern(regexp="\\b[\\w.%-]+@[-.\\w]+\\.[A-Za-z]{2,4}\\b")
 	private String email;
+	@NotBlank
 	private String username;
+	@NotBlank
 	private String password;
 	private boolean enabled;
 	

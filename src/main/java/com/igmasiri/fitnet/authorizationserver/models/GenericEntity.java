@@ -1,4 +1,4 @@
-package com.igmasiri.fitnet.authorizationserver.entity;
+package com.igmasiri.fitnet.authorizationserver.models;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

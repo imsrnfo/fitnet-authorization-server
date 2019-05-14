@@ -1,6 +1,6 @@
-package com.igmasiri.fitnet.authorizationserver.repository;
+package com.igmasiri.fitnet.authorizationserver.repositories;
 
-import com.igmasiri.fitnet.authorizationserver.entity.Usuario;
+import com.igmasiri.fitnet.authorizationserver.models.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

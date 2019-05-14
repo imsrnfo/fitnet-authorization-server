@@ -1,4 +1,4 @@
-package com.igmasiri.fitnet.authorizationserver.config;
+package com.igmasiri.fitnet.authorizationserver.config.oauth2;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

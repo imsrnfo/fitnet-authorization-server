@@ -1,7 +1,7 @@
-package com.igmasiri.fitnet.authorizationserver.service;
+package com.igmasiri.fitnet.authorizationserver.services;
 
-import com.igmasiri.fitnet.authorizationserver.entity.Usuario;
-import com.igmasiri.fitnet.authorizationserver.repository.UsuarioRepository;
+import com.igmasiri.fitnet.authorizationserver.models.Usuario;
+import com.igmasiri.fitnet.authorizationserver.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AccountStatusUserDetailsChecker;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 @Service(value = "userDetailsService")
-public class CustomUserDetailsService implements UserDetailsService {
+public class UsuarioService implements UserDetailsService {
 
 	@Autowired
 	private UsuarioRepository usuarioRepository;
