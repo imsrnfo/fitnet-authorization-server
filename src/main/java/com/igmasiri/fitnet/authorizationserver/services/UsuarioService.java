@@ -1,6 +1,8 @@
 package com.igmasiri.fitnet.authorizationserver.services;
 
+import com.igmasiri.fitnet.authorizationserver.models.Rol;
 import com.igmasiri.fitnet.authorizationserver.models.Usuario;
+import com.igmasiri.fitnet.authorizationserver.repositories.RolRepository;
 import com.igmasiri.fitnet.authorizationserver.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AccountStatusUserDetailsChecker;
@@ -9,13 +11,18 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service(value = "userDetailsService")
 public class UsuarioService implements UserDetailsService {
 
 	@Autowired
 	private UsuarioRepository usuarioRepository;
+
+	@Autowired
+	private RolRepository rolRepository;
 
 	@Override
 	public UserDetails loadUserByUsername(String input) {
@@ -30,6 +37,14 @@ public class UsuarioService implements UserDetailsService {
 	}
 
 	public Usuario save(Usuario usuario){
+		Usuario usuarioAttach = usuarioRepository.findByUsername(usuario.getUsername());
+		if (usuarioAttach!=null){
+			usuarioAttach.setUsername(usuario.getUsername());
+			usuarioAttach.setEmail(usuario.getEmail());
+			usuarioAttach.setPassword(usuario.getPassword());
+			usuario = usuarioAttach;
+		}
+		usuario.setRoles((usuario.getRoles()!=null) ? rolRepository.findByNameIn(usuario.getRoles().stream().map(Rol::getName).collect(Collectors.toList())) : new ArrayList<>());
 		return usuarioRepository.save(usuario);
 	}
 

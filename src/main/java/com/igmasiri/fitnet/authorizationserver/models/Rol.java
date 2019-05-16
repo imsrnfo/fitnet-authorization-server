@@ -1,9 +1,12 @@
 package com.igmasiri.fitnet.authorizationserver.models;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Rol extends GenericEntity {
 
 	private String name;

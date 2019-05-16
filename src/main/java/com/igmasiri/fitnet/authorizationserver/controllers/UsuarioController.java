@@ -41,7 +41,9 @@ public class UsuarioController extends GenericController {
 
     @GetMapping("")
     public List<Usuario> listar(){
-        return usuarioService.findAll();
+        List<Usuario> result = usuarioService.findAll();
+        result.stream().forEach(usuario -> usuario.getRoles().stream().forEach(rol -> rol.setPermisos(null)));
+        return result;
     }
 
 }
