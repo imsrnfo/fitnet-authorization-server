@@ -1,5 +1,6 @@
 package com.igmasiri.fitnet.authorizationserver.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -10,6 +11,7 @@ public class GenericEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonIgnore
 	protected int id;
 
 	public int getId() {

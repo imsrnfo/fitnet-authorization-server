@@ -1,6 +1,6 @@
 package com.igmasiri.fitnet.authorizationserver.repositories;
 
-import com.igmasiri.fitnet.authorizationserver.models.Usuario;
+import com.igmasiri.fitnet.authorizationserver.models.Rol;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,12 +9,11 @@ import java.util.List;
 
 @Repository
 @Transactional
-public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
+public interface RolRepository  extends JpaRepository<Rol, Long> {
 
-	Usuario findByUsername(String username);
+    Rol findByName(String name);
 
-	List<Usuario> findByUsernameContainingIgnoreCaseOrderByUsernameAsc(String username);
+    List<Rol> findByNameContainingIgnoreCaseOrderByNameAsc(String name);
+
 
 }
-
-

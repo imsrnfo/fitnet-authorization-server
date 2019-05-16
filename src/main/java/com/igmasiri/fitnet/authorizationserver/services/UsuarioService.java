@@ -9,6 +9,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service(value = "userDetailsService")
 public class UsuarioService implements UserDetailsService {
 
@@ -21,5 +23,25 @@ public class UsuarioService implements UserDetailsService {
 		if (usuario == null) throw new BadCredentialsException("Bad credentials");
 		new AccountStatusUserDetailsChecker().check(usuario);
 		return usuario;
+	}
+
+	public Usuario findByUsername(String username){
+		return usuarioRepository.findByUsername(username);
+	}
+
+	public Usuario save(Usuario usuario){
+		return usuarioRepository.save(usuario);
+	}
+
+	public List<Usuario> findAll(){
+		return usuarioRepository.findAll();
+	}
+
+	public void delete(Usuario usuario){
+		usuarioRepository.delete(usuario);
+	}
+
+	public List<Usuario> findByUsernameContainingIgnoreCase(String username){
+		return usuarioRepository.findByUsernameContainingIgnoreCaseOrderByUsernameAsc(username);
 	}
 }

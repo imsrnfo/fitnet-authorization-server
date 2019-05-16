@@ -1,6 +1,7 @@
 package com.igmasiri.fitnet.authorizationserver.models;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,15 +25,17 @@ public class Usuario extends GenericEntity implements UserDetails {
 	@NotBlank
 	private String username;
 	@NotBlank
+	@JsonIgnore
 	private String password;
+	@JsonIgnore
 	private boolean enabled;
-	
+	@JsonIgnore
 	@Column(name = "account_locked")
 	private boolean accountNonLocked;
-	
+	@JsonIgnore
 	@Column(name = "account_expired")
 	private boolean accountNonExpired;
-
+	@JsonIgnore
 	@Column(name = "credentials_expired")
 	private boolean credentialsNonExpired;
 
@@ -62,6 +65,7 @@ public class Usuario extends GenericEntity implements UserDetails {
 		return !accountNonLocked;
 	}
 
+	@JsonIgnore
 	/* Get rols and permissions and add them as a Set of GrantedAuthority */
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -91,6 +95,14 @@ public class Usuario extends GenericEntity implements UserDetails {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public List<Rol> getRols() {
+		return rols;
+	}
+
+	public void setRols(List<Rol> rols) {
+		this.rols = rols;
 	}
 
 }

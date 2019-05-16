@@ -1,57 +1,47 @@
 package com.igmasiri.fitnet.authorizationserver.controllers;
 
-import com.igmasiri.fitnet.authorizationserver.config.exceptions.AplicationHandledExceptionDTO;
 import com.igmasiri.fitnet.authorizationserver.models.Usuario;
-import org.springframework.http.HttpStatus;
+import com.igmasiri.fitnet.authorizationserver.services.UsuarioService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value="/usuarios")
 @Validated
-public class UsuarioController {
+public class UsuarioController extends GenericController {
+
+    @Autowired
+    private UsuarioService usuarioService;
 
     @PostMapping("/crear")
-    ResponseEntity<String> crear(@RequestBody Usuario usuario) {
-        // persisting the user
-        return ResponseEntity.ok("User is valid");
+    public Usuario crear(@RequestBody Usuario usuario) {
+        return usuarioService.save(usuario);
     }
 
-    @GetMapping(name = "buscar/{username}")
+    @GetMapping("/buscar/{username}")
     public List<Usuario> buscar(@PathVariable @NotBlank @Size(max = 10) String username) {
-        return null;
+        return usuarioService.findByUsernameContainingIgnoreCase(username);
     }
 
-    @GetMapping(name = "obtener/{username}")
+    @GetMapping("/obtener/{username}")
     public Usuario obtener(@PathVariable @NotBlank @Size(max = 10) String username) {
-        return null;
+        return usuarioService.findByUsername(username);
     }
 
-    @ExceptionHandler(Exception.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public @ResponseBody
-    AplicationHandledExceptionDTO mostrarExcepcion(Exception e) {
-
-        AplicationHandledExceptionDTO result = new AplicationHandledExceptionDTO();
-        result.setStatus("Error");
-        result.setMensaje(e.getMessage());
-
-        if (e instanceof ConstraintViolationException){
-            List<String> validationExceptions = ((ConstraintViolationException)e).getConstraintViolations()
-                    .stream()
-                    .map(ConstraintViolation::getMessage)
-                    .collect(Collectors.toList());
-            result.setMensaje(validationExceptions.stream().map(n -> n.toString()).collect(Collectors.joining(",")));
-        }
-
-        return result;
+    @GetMapping("/borrar/{username}")
+    public ResponseEntity<String> borrar(@PathVariable @NotBlank @Size(max = 10) String username){
+        usuarioService.delete(usuarioService.findByUsername(username));
+        return ResponseEntity.ok("El usuario eh sido borrado con exito.");
     }
+
+    @GetMapping("")
+    public List<Usuario> listar(){
+        return usuarioService.findAll();
+    }
+
 }
