@@ -32,11 +32,11 @@ public class GenericController {
 
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ValidationExceptionDTO mostrarExcepcionValidacion(Exception e) {
+    public ValidationExceptionDTO mostrarExcepcionValidacion(ConstraintViolationException e) {
 
         ValidationExceptionDTO result = new ValidationExceptionDTO();
 
-        for(ConstraintViolation constraintViolation : ((ConstraintViolationException)e).getConstraintViolations()){
+        for(ConstraintViolation constraintViolation : e.getConstraintViolations()){
             ValidationExceptionDTO.FieldExceptionDTO fieldExceptionDTO =  result.new FieldExceptionDTO();
             fieldExceptionDTO.setMessage(constraintViolation.getMessage());
             fieldExceptionDTO.setField(constraintViolation.getPropertyPath().toString());
