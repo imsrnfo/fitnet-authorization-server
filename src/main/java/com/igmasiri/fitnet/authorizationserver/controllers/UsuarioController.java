@@ -25,7 +25,7 @@ public class UsuarioController extends GenericController {
 
     @GetMapping("/buscar/{username}")
     public List<Usuario> buscar(@PathVariable @NotBlank @Size(max = 10) String username) {
-        return usuarioService.findByUsernameContainingIgnoreCase(username);
+        return usuarioService.findByUsernameContainingIgnoreCaseOrderByUsernameAsc(username);
     }
 
     @GetMapping("/obtener/{username}")

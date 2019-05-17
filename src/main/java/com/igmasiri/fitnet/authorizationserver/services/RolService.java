@@ -18,16 +18,16 @@ public class RolService {
         return rolRepository.findByName(username);
     }
 
-    public Rol save(Rol usuario){
-        return rolRepository.save(usuario);
+    public Rol save(Rol rol){
+        return rolRepository.save(rol);
     }
 
     public List<Rol> findAll(){
         return rolRepository.findAll();
     }
 
-    public void delete(Rol usuario){
-        rolRepository.delete(usuario);
+    public void delete(Rol rol){
+        rolRepository.delete(rol);
     }
 
     public List<Rol> findByNameContainingIgnoreCase(String username){

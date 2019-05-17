@@ -56,7 +56,7 @@ public class UsuarioService implements UserDetailsService {
 		usuarioRepository.delete(usuario);
 	}
 
-	public List<Usuario> findByUsernameContainingIgnoreCase(String username){
+	public List<Usuario> findByUsernameContainingIgnoreCaseOrderByUsernameAsc(String username){
 		return usuarioRepository.findByUsernameContainingIgnoreCaseOrderByUsernameAsc(username);
 	}
 }
