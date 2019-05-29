@@ -27,6 +27,7 @@ public class Usuario extends GenericEntity implements UserDetails {
 	private String username;
 	@NotBlank
 	private String password;
+	private String imagen;
 	@JsonIgnore
 	private boolean enabled;
 	@JsonIgnore
@@ -114,4 +115,11 @@ public class Usuario extends GenericEntity implements UserDetails {
 		this.roles = roles;
 	}
 
+	public String getImagen() {
+		return imagen;
+	}
+
+	public void setImagen(String imagen) {
+		this.imagen = imagen;
+	}
 }
