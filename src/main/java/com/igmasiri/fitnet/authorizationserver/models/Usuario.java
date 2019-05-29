@@ -22,8 +22,10 @@ public class Usuario extends GenericEntity implements UserDetails {
 	private static final long serialVersionUID = 1L;
 	@NotBlank
 	@Pattern(regexp="\\b[\\w.%-]+@[-.\\w]+\\.[A-Za-z]{2,4}\\b")
+	@Column(unique=true)
 	private String email;
 	@NotBlank
+	@Column(unique=true)
 	private String username;
 	@NotBlank
 	private String password;
