@@ -8,7 +8,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.List;
 
 @RestController
 @RequestMapping(value="/usuarios")
@@ -23,11 +22,6 @@ public class UsuarioController extends GenericController {
         return usuarioService.save(usuario);
     }
 
-    @GetMapping("/buscar/{username}")
-    public List<Usuario> buscar(@PathVariable @NotBlank @Size(max = 10) String username) {
-        return usuarioService.findByUsernameContainingIgnoreCaseOrderByUsernameAsc(username);
-    }
-
     @GetMapping("/obtener/{username}")
     public Usuario obtener(@PathVariable @NotBlank @Size(max = 10) String username) {
         return usuarioService.findByUsername(username);
@@ -37,13 +31,6 @@ public class UsuarioController extends GenericController {
     public ResponseEntity<String> borrar(@PathVariable @NotBlank @Size(max = 10) String username){
         usuarioService.delete(usuarioService.findByUsername(username));
         return ResponseEntity.ok("El usuario eh sido borrado con exito.");
-    }
-
-    @GetMapping("")
-    public List<Usuario> listar(){
-        List<Usuario> result = usuarioService.findAll();
-        result.stream().forEach(usuario -> usuario.getRoles().stream().forEach(rol -> rol.setPermisos(null)));
-        return result;
     }
 
 }
