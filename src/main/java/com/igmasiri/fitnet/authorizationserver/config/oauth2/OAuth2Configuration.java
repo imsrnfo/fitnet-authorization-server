@@ -33,7 +33,7 @@ import javax.sql.DataSource;
 @EnableAuthorizationServer
 public class OAuth2Configuration extends AuthorizationServerConfigurerAdapter {
 
-	@Value("${check-user-scopes}")
+	@Value("${fitnet.check-user-scopes}")
 	private Boolean checkUserScopes;
 
 	@Autowired

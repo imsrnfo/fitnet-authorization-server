@@ -12,7 +12,6 @@ buildscript {
 
 apply plugin: 'war'
 apply plugin: 'java'
-apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
@@ -26,8 +25,34 @@ repositories {
 
 dependencies {
     compile "org.springframework.boot:spring-boot-starter-data-jpa"
-    compile "org.springframework.boot:spring-boot-starter-web"
     compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-oauth2', version: '2.1.2.RELEASE'
     compile "org.springframework.cloud:spring-cloud-starter-security"
     compile "mysql:mysql-connector-java"
+    compile 'commons-io:commons-io:2.6'
+
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
+    testCompile 'com.h2database:h2'
+
+    compile ("org.springframework.boot:spring-boot-starter-web") {
+        exclude group: "org.springframework.boot", module: "spring-boot-starter-tomcat"
+    }
+    compile "org.springframework.boot:spring-boot-starter-undertow"
 }
+
+task setProductionConfig() {
+    group = "other"
+    description = "Sets the environment for production mode"
+    doFirst {
+        ant.propertyfile(file: "./build/resources/main/application.properties") {
+            entry(key: "spring.profiles.active", value: "produccion")
+        }
+    }
+    doLast {
+    }
+}
+
+bootWar {
+    dependsOn setProductionConfig
+}
+
+sourceSets.main.java.srcDirs = ['src/main/java']
