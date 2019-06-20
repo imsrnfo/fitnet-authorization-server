@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jboss-web>
-    <context-root>fitnet-authorization-server</context-root>
+    <context-root>/</context-root>
+    <virtual-host>fitnet-authorization-host</virtual-host>
    	<replication-config>
         <replication-trigger>SET_AND_NON_PRIMITIVE_GET</replication-trigger>
         <replication-granularity>SESSION</replication-granularity>

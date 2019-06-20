@@ -1,6 +1,7 @@
 package com.igmasiri.fitnet.authorizationserver.config.oauth2;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -30,9 +31,14 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		return super.authenticationManagerBean();
 	}
 
+	@Autowired
+	private SecurityProperties securityProperties;
+
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
 		http
+				//.requiresChannel().anyRequest().requiresSecure()
+				//.and()
 				.csrf().disable()
 				.exceptionHandling()
 				.authenticationEntryPoint((request, response, authException) -> response.sendError(HttpServletResponse.SC_UNAUTHORIZED))
