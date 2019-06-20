@@ -4,12 +4,14 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Properties;
+import java.util.function.Supplier;
 
 import javax.annotation.PreDestroy;
 import javax.naming.NamingException;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
+import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -44,6 +46,8 @@ public class DatabaseConfig {
 	private String username;
 	@Value("${fitnet.datasource.password}")
 	private String password;
+	@Value("${fitnet.datasource.action}")
+	private String action;
 	
 	@Bean
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory() throws IllegalArgumentException, NamingException, ScriptException, IOException, SQLException {
@@ -52,7 +56,16 @@ public class DatabaseConfig {
 		em.setPackagesToScan(new String[] { "com.igmasiri.fitnet.authorizationserver.models" });
 		JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
 		em.setJpaVendorAdapter(vendorAdapter);
-		em.setJpaProperties(additionalProperties());
+
+		setJpaProperties : {
+			Supplier<Properties> getProperties = () -> {
+				Properties properties = new Properties();
+				properties.setProperty("hibernate.hbm2ddl.auto", Arrays.asList(environment.getActiveProfiles()).contains("test") ? "none" : action);
+				properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL57Dialect");
+				return properties;
+			};
+			em.setJpaProperties(getProperties.get());
+		}
 
 		return em;
 	}
@@ -106,22 +119,6 @@ public class DatabaseConfig {
 	@Bean
 	public PersistenceExceptionTranslationPostProcessor exceptionTranslation() {
 		return new PersistenceExceptionTranslationPostProcessor();
-	}
-
-	Properties additionalProperties() {
-		
-		String hbm2ddl;
-		
-		if (Arrays.asList(environment.getActiveProfiles()).contains("test")) {
-			hbm2ddl = "none";
-		} else {
-			hbm2ddl = "validate";
-		}
-		
-		Properties properties = new Properties();
-		properties.setProperty("hibernate.hbm2ddl.auto", hbm2ddl);
-		properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL57Dialect");
-		return properties;
 	}
 
 }
