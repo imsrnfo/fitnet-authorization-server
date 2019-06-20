@@ -1,4 +1,3 @@
-spring:
+fitnet:
   datasource:
-    username: root
-    password: puntos
+    url: java:/fitnetAuthorizationServerDS

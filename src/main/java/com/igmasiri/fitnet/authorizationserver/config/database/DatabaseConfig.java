@@ -13,6 +13,7 @@ import javax.sql.DataSource;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -36,6 +37,13 @@ public class DatabaseConfig {
 	
 	@Autowired
 	private Environment environment;
+
+	@Value("${fitnet.datasource.url}")
+	private String url;
+	@Value("${fitnet.datasource.username}")
+	private String username;
+	@Value("${fitnet.datasource.password}")
+	private String password;
 	
 	@Bean
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory() throws IllegalArgumentException, NamingException, ScriptException, IOException, SQLException {
@@ -65,7 +73,7 @@ public class DatabaseConfig {
 		if (Arrays.asList(environment.getActiveProfiles()).contains("produccion")) {
 			System.out.println("Ambiente de produccion");
 			JndiObjectFactoryBean bean = new JndiObjectFactoryBean();
-			bean.setJndiName("java:/fitnetAuthorizationServerDS");
+			bean.setJndiName(url);
 			bean.setProxyInterface(DataSource.class);
 			bean.setLookupOnStartup(false);
 			bean.afterPropertiesSet();
@@ -73,18 +81,17 @@ public class DatabaseConfig {
 		} else if (Arrays.asList(environment.getActiveProfiles()).contains("test")) {
 		  	DriverManagerDataSource dataSource = new DriverManagerDataSource();
 	        dataSource.setDriverClassName("org.h2.Driver");
-			dataSource.setUrl("jdbc:h2:mem:db;DB_CLOSE_DELAY=-1;MODE=MySQL");
-	        dataSource.setUsername("sa");
-	        dataSource.setPassword("sa");
+			dataSource.setUrl(url);
+	        dataSource.setUsername(username);
+	        dataSource.setPassword(password);
 			ScriptUtils.executeSqlScript(dataSource.getConnection(), new ByteArrayResource(IOUtils.resourceToByteArray("/scripts/v1_0_0.sql")));
 			return dataSource;
 		} else {
 			System.out.println("Ambiente de desarrollo");
-			String parametrosDB = "?useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 			return DataSourceBuilder.create()
-					.url("jdbc:mysql://127.0.0.1/tmp"+parametrosDB)
-					.username("root")
-					.password("puntos")
+					.url(url)
+					.username(username)
+					.password(password)
 					.build();
 		}
 	}
