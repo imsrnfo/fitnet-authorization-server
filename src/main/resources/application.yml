@@ -10,6 +10,7 @@ spring:
 fitnet:
   version: 1.0.0
   check-user-scopes: true
+  force-https: false
   datasource:
     url: jdbc:mysql://localhost:3306/tmp?useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
     username: root

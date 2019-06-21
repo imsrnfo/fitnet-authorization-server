@@ -1,3 +1,4 @@
 fitnet:
+  force-https: true
   datasource:
     url: java:/fitnetAuthorizationServerDS

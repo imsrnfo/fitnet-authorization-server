@@ -35,11 +35,20 @@
 ####SSL
 <socket-binding name="https" port="${jboss.https.port:443}"/>
 <keystore path="nacho.keystore" relative-to="jboss.server.config.dir" keystore-password="1234" alias="as" key-password="1234"/>
+#####Certificado
+...\wildfly-17.0.0.Final\standalone\configuration\nacho.keystore
 
-##S.O Simular DNS
+##Windows
 
-###Windows
+###Simular DNS
 C:\Windows\System32\drivers\etc\hosts
 127.0.0.1 auth.fitnet.com.ui
 127.0.0.1 res.fitnet.com.ui
 127.0.0.1:3000 fitnet.com.ui
+
+###Generar Certificado
+####Usar kse (KeyStoreExplorer)
+.Create new KeyStore -> JKS -> OK
+.(click-der) -> Generate Key Pair -> RSA (2048) -> OK
+.Edit Name -> (llenar campos) -> OK -> OK -> Elegir Alias -> OK -> Password para el alias
+.Save (con extension .keystore) -> Password para el keystore
