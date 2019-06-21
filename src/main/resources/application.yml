@@ -12,7 +12,7 @@ fitnet:
   check-user-scopes: true
   force-https: false
   datasource:
-    url: jdbc:mysql://localhost:3306/tmp?useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/fitnet-authorization-server-dev?useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
     username: root
     password: puntos
-    action: validate
+    action: update

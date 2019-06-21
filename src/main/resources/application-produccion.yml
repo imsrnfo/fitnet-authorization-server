@@ -2,3 +2,10 @@ fitnet:
   force-https: true
   datasource:
     url: java:/fitnetAuthorizationServerDS
+    action: validate
+
+spring:
+  application:
+    name: fitnet-authorization-server
+  jmx:
+    default-domain: fitnet-authorization-server

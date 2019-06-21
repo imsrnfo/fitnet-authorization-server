@@ -6,7 +6,7 @@
 
 ####Datasource
 <datasource jta="true" jndi-name="java:/fitnetAuthorizationServerDS" pool-name="fitnetAuthorizationServerDS" enabled="true" use-ccm="false">
-    <connection-url>jdbc:mysql://127.0.0.1/tmp</connection-url>
+    <connection-url>jdbc:mysql://127.0.0.1/fitnet-authorization-server?useSSL=false&amp;useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC</connection-url>
     <driver-class>com.mysql.jdbc.Driver</driver-class>
     <connection-property name="rewriteBatchedStatements">
         true
@@ -38,13 +38,15 @@
 #####Certificado
 ...\wildfly-17.0.0.Final\standalone\configuration\nacho.keystore
 
+####Debug remote
+wildfly-17.0.0.Final\bin\standalone.conf.bat
+set "JAVA_OPTS=%JAVA_OPTS% -agentlib:jdwp=transport=dt_socket,address=8787,server=y,suspend=n"
+
 ##Windows
 
 ###Simular DNS
 C:\Windows\System32\drivers\etc\hosts
 127.0.0.1 auth.fitnet.com.ui
-127.0.0.1 res.fitnet.com.ui
-127.0.0.1:3000 fitnet.com.ui
 
 ###Generar Certificado
 ####Usar kse (KeyStoreExplorer)
