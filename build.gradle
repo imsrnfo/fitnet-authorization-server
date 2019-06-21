@@ -55,4 +55,20 @@ bootWar {
     dependsOn setProductionConfig
 }
 
+task setDevelopmentConfig() {
+    group = "other"
+    description = "Sets the environment for development mode"
+    doFirst {
+        ant.propertyfile(file: "./build/resources/main/application.properties") {
+            entry(key: "spring.profiles.active", value: "desarrollo")
+        }
+    }
+    doLast {
+    }
+}
+
+bootRun{
+    dependsOn setDevelopmentConfig
+}
+
 sourceSets.main.java.srcDirs = ['src/main/java']
